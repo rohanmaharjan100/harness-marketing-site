@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+    />
+    <title>Coveo Atomic</title>
+    <link rel="stylesheet" href="./coveoSearchResult.css" />
+    <!-- <link rel="stylesheet" href="./SearchDropDown.css" /> -->
+
+    <script
+      defer
+      type="module"
+      src="https://static.cloud.coveo.com/atomic/v3/atomic.esm.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://static.cloud.coveo.com/atomic/v3/themes/coveo.css"
+    />
+    <!-- <link rel="stylesheet" href="https://cms.harness.io/css/SearchDropDown.css" />
+    <link
+      rel="stylesheet"
+      href="https://cms.harness.io/css/coveoSearchResult.css"
+    /> -->
+
+    <script type="module">
+      import {
+        loadFacetSetActions
+      } from 'https://static.cloud.coveo.com/atomic/v1/headless/headless.esm.js'; 
+      (async () => {
+        await customElements.whenDefined('atomic-search-interface');
+        const searchInterfaceBox = document.getElementById(
+          'search-interface-box'
+        );
+        await searchInterfaceBox.initialize({
+          accessToken:
+            '',
+          organizationId: 'harnessproductionp9tivsqy',
+        });
+        searchInterfaceBox.i18n.addResourceBundle('en', 'caption-filetype', {
+          '.html': 'html',
+        });
+
+       
+        const searchInterfaceResult = document.getElementById(
+          'search-interface-result'
+        );
+        if (searchInterfaceResult) {
+          await searchInterfaceResult.initialize({
+            accessToken:
+              '',
+              organizationId: 'harnessproductionp9tivsqy',
+          });
+          const params = new URLSearchParams(window.location.search);
+        
+        const engine = searchInterfaceResult.engine; 
+        const action = loadFacetSetActions(engine).toggleSelectFacetValue({
+          facetId: params.get('facet'),
+          selection: {
+            value:  params.get('value'),
+            state: "selected",
+          }
+        });
+        engine.dispatch(action); 
+
+          searchInterfaceResult.executeFirstSearch();
+          searchInterfaceResult.i18n.addResourceBundle(
+            'en',
+            'caption-filetype',
+            {
+              '.html': 'html',
+            }
+          );
+        }
+      })();
+    </script>
+    <!-- <script src="./coveoScript.js"></script> -->
+
+  </head>
+
+  <body>
+
+      <atomic-search-interface id="search-interface-box">
+        <atomic-search-layout>
+    
+          <atomic-layout-section section="search">
+            <atomic-search-box redirection-url="/harness.html" >
+              <atomic-search-box-query-suggestions>
+              </atomic-search-box-query-suggestions>
+            </atomic-search-box>
+          </atomic-layout-section>
+        </atomic-search-layout>
+      </atomic-search-interface>
+    
+    <div class="search-result-page">
+      <atomic-aria-live></atomic-aria-live>
+
+      <atomic-search-interface
+        id="search-interface-result"
+        fields-to-include='["categoryname", "commonmodule","commonvaluedriver"]'
+      >
+        <atomic-search-layout class="atomic-search-layout-search">
+          <atomic-layout-section section="search">
+            <atomic-search-box>
+              <atomic-search-box-query-suggestions>
+              </atomic-search-box-query-suggestions>
+            </atomic-search-box>
+          </atomic-layout-section>
+        </atomic-search-layout>
+        <div style="margin: 20px 0; border-top: 0px solid white"></div>
+        <atomic-search-layout  class="atomic-search-layout-result">
+          <atomic-layout-section section="facets">
+            <atomic-html
+              value="<p  style='margin-bottom:32px;color:white;font-size: 16px; font-weight: 600; line-height: 21.92px; letter-spacing: -0.02em; text-align: left;margin-top:6px'>Filter properties by</p>"
+            ></atomic-html>
+            <atomic-facet-manager>     <atomic-facet
+              field="commonvaluedriver"
+              label="Business Value" 
+              sortCriteria="alphanumericDescending"               
+            ></atomic-facet></atomic-facet-manager>
+            <atomic-facet-manager>    <atomic-facet 
+            field="commonmodule" 
+            label="Product" 
+        
+            custom-sort='[
+              "AI Code Assistant",
+              "Armory",
+              "Artifact Registry",
+              "Chaos Engineering",
+              "Cloud Cost Management",
+              "Cloud Development Environments",
+              "Code Repository",
+              "Continuous Delivery",
+              "Continuous Delivery & GitOps",
+              "Continuous Error Tracking",
+              "Continuous Integration",
+              "Database DevOps",
+              "Feature Flags",
+              "Feature Management & Experimentation",
+              "Harness Intelligence",
+              "Harness Platform",
+              "Infrastructure as Code Management",
+              "Internal Developer Portal",
+              "Open Source",
+              "Security Testing Orchestration",
+              "Service Reliability Management",
+              "Software Engineering Insights",
+              "Software Supply Chain Assurance",
+              "Supply Chain Security"
+            ]'>
+          </atomic-facet></atomic-facet-manager>
+            <atomic-facet-manager>
+         
+              
+            
+              <atomic-facet field="commonsource" label="Source" sortCriteria="alphanumericDescending" ></atomic-facet>
+              <atomic-facet
+                field="categoryname"
+                label="Category"
+                sortCriteria="alphanumericDescending" 
+              ></atomic-facet>
+           </atomic-facet>
+           
+          </atomic-facet-manager>
+          </atomic-layout-section>
+          <atomic-layout-section section="main" class="atomic-layout-section-results">
+            <atomic-layout-section section="status">
+              <atomic-breadbox></atomic-breadbox>
+              <atomic-query-summary></atomic-query-summary>
+              <atomic-refine-toggle></atomic-refine-toggle>
+              <atomic-sort-dropdown>
+                <atomic-sort-expression
+                  label="relevance"
+                  expression="relevancy"
+                ></atomic-sort-expression>
+                <atomic-sort-expression
+                  label="most-recent"
+                  expression="date descending"
+                ></atomic-sort-expression>
+                <atomic-sort-expression
+                  label="Oldest"
+                  expression="date ascending"
+                ></atomic-sort-expression>
+              </atomic-sort-dropdown>
+              <atomic-did-you-mean></atomic-did-you-mean>
+            </atomic-layout-section>
+            <atomic-layout-section section="results">
+              <atomic-result-list>
+                <atomic-result-template>
+                  <template class="template">
+                    <style>
+                      .result-root {
+                        display: flex !important;
+                        flex-direction: column;
+                        gap: 16px;
+                      }
+                      .text-group {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 8px;
+                      }
+                      .badge {
+                        height: 24px;
+                        border: 1px solid #FFFFFF1B;
+                        border-radius: 4px !important;
+                        background-color: #FFFFFF12;
+                        padding: 4px 8px 4px 8px;
+                        gap: 4px;
+                        cursor: pointer;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                      }
+                      .badge > atomic-result-text {
+                        color: #FFFFFF !important;
+                        font-size: 10px;
+                        font-weight: 600;
+                        line-height: 13.7px;
+                        letter-spacing: -0.02em;
+                        text-align: left;
+                      }
+
+                      .badge-section,
+                      .excerpt {
+                        margin: 0 !important;
+                        padding: 0 !important;
+                      }
+                      atomic-field-condition {
+                        display: flex;
+                      }
+
+                      .badge-bottom-list {
+                        display: flex !important;
+                        gap: 14px;
+                        margin: 0 !important;
+                        padding: 0 !important;
+                        align-items: center !important;
+                        justify-content: flex-start;
+                      }
+
+                      atomic-result-badge::part(result-badge-element) {
+                        padding: 0 4px;
+                        background-color: transparent;
+                        color: #646464;
+                     
+                      }
+                      .title > a > atomic-result-text {
+                        color: #2bb1f2;
+                        font-size: 20px;
+                        font-weight: 500;
+                        line-height: 27.4px;
+                        letter-spacing: -0.02em;
+                        text-align: left;
+                      }
+                      .uri > a > atomic-result-text {
+                        color: #e4e4e4;
+                        font-size: 14px;
+                        font-weight: 300;
+                        line-height: 19.18px;
+                        text-align: left;
+                        text-decoration: underline;
+                      }
+                      .excerpt > atomic-result-text {
+                        color: #e4e4e4;
+                        font-size: 12px;
+                        font-weight: 300;
+                        line-height: 16.44px;
+                        text-align: left;
+                      }
+                    </style>
+
+                    <atomic-result-section-badges class="badge-section">
+                      <atomic-field-condition class="field" if-defined="source">
+                        <atomic-result-badge class="badge">
+                          <atomic-result-text
+                            class="text-black"
+                            field="source"
+                          ></atomic-result-text>
+                        </atomic-result-badge>
+                      </atomic-field-condition>
+                    </atomic-result-section-badges>
+                    <div class="text-group">
+                      <atomic-result-section-title>
+                        <atomic-result-link class="title"></atomic-result-link>
+                      </atomic-result-section-title>
+
+                      <atomic-result-printable-uri
+                        class="uri"
+                      ></atomic-result-printable-uri>
+
+                      <atomic-result-section-excerpt class="excerpt">
+                        <atomic-result-text
+                          field="excerpt"
+                        ></atomic-result-text>
+                      </atomic-result-section-excerpt>
+                    </div>
+                    <atomic-result-section-bottom-metadata
+                      class="badge-bottom-list"
+                    >
+                      <atomic-field-condition
+                        class="field"
+                        if-defined="commonmodule"
+                      >
+                        <atomic-result-badge class="">
+                          <atomic-result-multi-value-text
+                            field="commonmodule"
+                          ></atomic-result-multi-value-text>
+                        </atomic-result-badge>
+                      </atomic-field-condition>
+                      <atomic-field-condition
+                        class="field"
+                        if-defined="commonvaluedriver"
+                      >
+                        <atomic-result-badge class="">
+                          <atomic-result-multi-value-text
+                            field="commonvaluedriver"
+                          ></atomic-result-multi-value-text>
+                        </atomic-result-badge>
+                      </atomic-field-condition>
+
+                      <atomic-field-condition
+                        class="field"
+                        if-defined="categoryname"
+                      >
+                        <atomic-result-badge class="">
+                          <atomic-result-multi-value-text
+                            field="categoryname"
+                          ></atomic-result-multi-value-text>
+                        </atomic-result-badge>
+                      </atomic-field-condition>
+                    </atomic-result-section-bottom-metadata>
+                  </template>
+                </atomic-result-template>
+              </atomic-result-list>
+              <atomic-query-error></atomic-query-error>
+              <atomic-no-results></atomic-no-results>
+            </atomic-layout-section>
+            <div style="margin: 20px 0; border-top: 2px solid white"></div>
+            <atomic-layout-section section="pagination">
+              <atomic-pager></atomic-pager>
+              <atomic-results-per-page></atomic-results-per-page>
+            </atomic-layout-section>
+          </atomic-layout-section>
+        </atomic-search-layout>
+      </atomic-search-interface>
+    </div>
+  </body>
+
+  <!-- <script src="https://cms.harness.io/js/coveoScript.js"></script> -->
+  <script src="./coveoScript.js"></script>
+</html>

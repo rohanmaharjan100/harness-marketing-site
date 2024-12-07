@@ -1,0 +1,533 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script defer src="https://cdn.tailwindcss.com"></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.production.min.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
+    ></script>
+    <script
+      defer
+      src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      body {
+        background-color: black;
+      }
+    </style>
+  </head>
+  <body class="harness-status"></body>
+
+  <script>
+    let data = [
+      {
+        component: 'Continuous Error Tracking (CET)',
+        date: 'Sep 2024',
+        uptime: '100',
+        cluster: 'Prod Eu1',
+      },
+      {
+        component: 'Infrastructure as Code Management (IaCM)',
+        date: 'Sep 2024',
+        uptime: '100',
+        cluster: 'Prod Eu1',
+      },
+      {
+        component: 'Internal Developer Portal (IDP)',
+        date: 'Sep 2024',
+        uptime: '100',
+        cluster: 'Prod Eu1',
+      },
+      {
+        component: 'Security Testing Orchestration (STO)',
+        date: 'Sep 2024',
+        uptime: '100',
+        cluster: 'Prod Eu1',
+      },
+      {
+        component: 'Service Reliability Management (SRM)',
+        date: 'Sep 2024',
+        uptime: '100',
+        cluster: 'Prod Eu1',
+      },
+      {
+        component:
+          'Continuous Integration Enterprise(CIE) - Self Hosted Runners',
+        date: 'Sep 2024',
+        uptime: '100',
+        cluster: 'Prod Eu1',
+      },
+      { component: '', date: 'Sep 2024', uptime: '100', cluster: 'Prod Eu1' },
+      {
+        component: 'Feature Flags (FF)',
+        date: 'Sep 2024',
+        uptime: '100',
+        cluster: 'Prod Eu1',
+      },
+      {
+        component: 'Custom Dashboards',
+        date: 'Sep 2024',
+        uptime: '100',
+        cluster: 'Prod Eu1',
+      },
+      {
+        component: 'Cloud Cost Management (CCM)',
+        date: 'Sep 2024',
+        uptime: '100',
+        cluster: 'Prod Eu1',
+      },
+      {
+        component: 'Chaos Engineering',
+        date: 'Sep 2024',
+        uptime: '100',
+        cluster: 'Prod Eu1',
+      },
+      {
+        component: 'Continuous Delivery - Next Generation (CDNG)',
+        date: 'Sep 2024',
+        uptime: '100',
+        cluster: 'Prod Eu1',
+      },
+      {
+        component: 'Software Supply Chain Assurance (SSCA)',
+        date: 'Jul 2024',
+        uptime: '100.00',
+        cluster: 'Prod 1',
+      },
+      {
+        component: 'Cloud Cost Management (CCM)',
+        date: 'Jun 2024',
+        uptime: '100.00',
+        cluster: 'Prod 1',
+      },
+      {
+        component: 'Continuous Delivery - Next Generation (CDNG)',
+        date: 'Jun 2024',
+        uptime: '100.00',
+        cluster: 'Prod 1',
+      },
+
+      {
+        component: 'Infrastructure as Code Management (IaCM)',
+        date: 'Jul 2024',
+        uptime: '100.00',
+        cluster: 'Prod 1',
+      },
+      {
+        component: 'Internal Developer Portal (IDP)',
+        date: 'Jul 2024',
+        uptime: '100.00',
+        cluster: 'Prod 1',
+      },
+      {
+        component: 'Cloud Cost Management (CCM)',
+        date: 'Jul 2024',
+        uptime: '100.00',
+        cluster: 'Prod 1',
+      },
+      {
+        component: 'Continuous Error Tracking (CET)',
+        date: 'Jul 2024',
+        uptime: '100.00',
+        cluster: 'Prod 1',
+      },
+      {
+        component: 'Feature Flags (FF)',
+        date: 'Aug 2024',
+        uptime: '100.00',
+        cluster: 'Prod 1',
+      },
+      { component: '', date: 'Nov 2023', uptime: '100.00', cluster: 'Prod 1' },
+      { component: '', date: 'Dec 2023', uptime: '100.00', cluster: 'Prod 1' },
+      { component: '', date: 'Jan 2024', uptime: '100.00', cluster: 'Prod 1' },
+      { component: '', date: 'Feb 2024', uptime: '100.00', cluster: 'Prod 1' },
+      { component: '', date: 'Mar 2024', uptime: '100.00', cluster: 'Prod 1' },
+      { component: '', date: 'Apr 2024', uptime: '100.00', cluster: 'Prod 1' },
+      { component: '', date: 'May 2024', uptime: '100.00', cluster: 'Prod 1' },
+      { component: '', date: 'Jun 2024', uptime: '100.00', cluster: 'Prod 1' },
+      { component: '', date: 'Jul 2024', uptime: '100.00', cluster: 'Prod 1' },
+      { component: '', date: 'Aug 2024', uptime: '100.00', cluster: 'Prod 1' },
+      { component: '', date: 'Sep 2024', uptime: '100.00', cluster: 'Prod 1' },
+      { component: '', date: 'Oct 2024', uptime: '100.00', cluster: 'Prod 1' },
+      { component: '', date: 'Nov 2024', uptime: '100.00', cluster: 'Prod 1' },
+      {
+        component: 'Security Testing Orchestration (STO)',
+        date: 'Aug 2024',
+        uptime: '100.00',
+        cluster: 'Prod 1',
+      },
+      {
+        component:
+          'Continuous Integration Enterprise(CIE) - Self Hosted Runners',
+        date: 'Aug 2024',
+        uptime: '100.00',
+        cluster: 'Prod 1',
+      },
+      {
+        component: 'Continuous Integration Enterprise(CIE) - Mac Cloud Builds',
+        date: 'Aug 2024',
+        uptime: '100.00',
+        cluster: 'Prod 1',
+      },
+      {
+        component:
+          'Continuous Integration Enterprise(CIE) - Windows Cloud Builds',
+        date: 'Aug 2024',
+        uptime: '100.00',
+        cluster: 'Prod 1',
+      },
+      {
+        component:
+          'Continuous Integration Enterprise(CIE) - Linux Cloud Builds',
+        date: 'Aug 2024',
+        uptime: '100.00',
+        cluster: 'Prod 1',
+      },
+      {
+        component: 'Continuous Delivery - Next Generation (CDNG)',
+        date: 'Jul 2024',
+        uptime: '100.00',
+        cluster: 'Prod 1',
+      },
+      {
+        component: 'Continuous Delivery - Next Generation (CDNG)',
+        date: 'Aug 2024',
+        uptime: '100.00',
+        cluster: 'Prod 1',
+      },
+    ];
+    data.filter(
+      (item) =>
+        item.component !==
+        'Continuous Integration Enterprise(CIE) - Cloud Builds'
+    );
+    const uniqueDates = data.reduce((acc, item) => {
+      const { date } = item;
+      acc.add(date);
+      return acc;
+    }, new Set());
+
+    const uniqueDateArray = Array.from(uniqueDates);
+
+    const uniqueDateArraySorted = uniqueDateArray.sort(
+      (a, b) => new Date(a) - new Date(b)
+    );
+  </script>
+  <script type="text/babel">
+    const domContainer = document.getElementsByClassName('harness-status');
+    const root = ReactDOM.createRoot(domContainer[0]);
+    function App() {
+      const clustersAndComponents = data.reduce((acc, item) => {
+        const { cluster, component } = item;
+        if (!acc[cluster]) {
+          acc[cluster] = [];
+        }
+        acc[cluster].push(component);
+        return acc;
+      }, {});
+
+      Object.entries(clustersAndComponents).map((item) => {
+        let newArr = [...new Set(item[1])];
+        clustersAndComponents[item[0]] = newArr;
+      });
+
+      const newArr = Object.keys(clustersAndComponents).sort();
+      let SortedclustersAndComponent = {};
+      newArr.forEach((item) => {
+        SortedclustersAndComponent[item] = clustersAndComponents[item];
+      });
+
+      return (
+        <div className="px-14 py-10 sm:px-28 sm:py-14">
+          <div className="flex justify-start items-center gap-[4px] cursor-pointer ">
+            <div className="w-[24px] h-[24px] flex justify-center items-center ">
+              <i className="fa-solid fa-chevron-left w-[7.6px]  text-white"></i>
+            </div>
+            <a
+              href="https://www.harness.io/support"
+              className="text-white leading-[24px] text-[20px] font-medium  "
+            >
+              Back
+            </a>
+          </div>
+          <h1 className="font-semibold text-[40px] leading-[48px] text-white mb-[59px] mt-16">
+            Uptime over the past 12 months
+          </h1>
+          {Object.entries(SortedclustersAndComponent).map(
+            (clustersAndComponent, index) => (
+              <ClusterBox
+                clustersAndComponent={clustersAndComponent}
+                data={data}
+                key={index}
+              />
+            )
+          )}
+
+          <p className="text-white mt-[40px] ">
+            For information on identifying the Cluster hosting your Harness
+            account, visit our {'  '}
+            <a
+              href="https://developer.harness.io/docs/platform/Get-started/platform-concepts/view-account-info-and-subscribe-to-alerts"
+              className="underline"
+            >
+              {' '}
+              support page{'   '}
+            </a>
+          </p>
+
+          <ul className="mt-[20px]">
+            <li>
+              {' '}
+              <a
+                href="https://status.harness.io/"
+                className="underline text-white"
+              >
+                {' '}
+                Harness status page
+              </a>
+            </li>
+            <li>
+              {' '}
+              <a
+                href="https://status.harness.io/#past-incidents"
+                className="underline text-white"
+              >
+                {' '}
+                Past Incidents Page{' '}
+              </a>
+            </li>
+          </ul>
+        </div>
+      );
+    }
+
+    const ClusterBox = ({ clustersAndComponent, data }) => {
+      const [clusterOpen, setClusterOpen] = React.useState({});
+      const toggleCluster = (clusterName) => {
+        setClusterOpen((prev) => ({
+          ...prev,
+          [clusterName]: !prev[clusterName],
+        }));
+
+        if (ClusterBoxRef.current) {
+          ClusterBoxRef.current.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+          });
+        }
+      };
+
+      const [selectedValue, setSelectedValue] = React.useState([]);
+      const [fullSelectedValue, setFullSelectedValue] = React.useState([]);
+      React.useEffect(() => {
+        const initialValue = data.filter(
+          (item) =>
+            item.cluster === clustersAndComponent[0] && item.component === ''
+        );
+
+        const existingDates = new Set(initialValue.map((item) => item.date));
+
+        if (initialValue.length < 12) {
+          uniqueDateArraySorted.forEach((date) => {
+            // Only add date if it is not already in existingDates
+            if (!existingDates.has(date)) {
+              initialValue.push({
+                component: '',
+                date: date,
+                uptime: '', // Assuming default uptime; adjust as needed
+                cluster: '', // Assuming same cluster; adjust as needed
+              });
+            }
+          });
+        }
+
+        setSelectedValue(initialValue);
+      }, []);
+      function GetAllClusterStatusData(cluster) {
+        let arr = [];
+        const customOrder = [
+          'Continuous Delivery (CD) - FirstGen - EOS',
+          'Continuous Delivery - Next Generation (CDNG)',
+          'Cloud Cost Management (CCM)',
+          'Continuous Error Tracking (CET)',
+          'Chaos Engineering',
+          'Continuous Integration Enterprise (CIE) - Self Hosted Runners',
+          'Continuous Integration Enterprise(CIE) - Self Hosted Runners',
+          'Continuous Integration Enterprise(CIE) - Mac Cloud Builds',
+          'Continuous Integration Enterprise(CIE) - Windows Cloud Builds',
+          'Continuous Integration Enterprise(CIE) - Linux Cloud Builds',
+          'Custom Dashboards',
+          'Feature Flags (FF)',
+          'Security Testing Orchestration (STO)',
+          'Service Reliability Management (SRM)',
+          'Internal Developer Portal (IDP)',
+          'Infrastructure as Code Management (IaCM)',
+          'Software Supply Chain Assurance (SSCA)',
+          'Software Engineering Insights (SEI)',
+        ];
+        const components = clustersAndComponent[1].filter((item) => item != '');
+        components.forEach((component) => {
+          const values = data.filter(
+            (item) => item.cluster === cluster && item.component === component
+          );
+          const existingDates = new Set(values.map((item) => item.date));
+
+          if (values.length < 12) {
+            uniqueDateArraySorted.forEach((date) => {
+              // Only add date if it is not already in existingDates
+              if (!existingDates.has(date)) {
+                values.push({
+                  component: '',
+                  date: date,
+                  uptime: '', // Assuming default uptime; adjust as needed
+                  cluster: '', // Assuming same cluster; adjust as needed
+                });
+              }
+            });
+          }
+          arr.push({ component: component, values });
+        });
+
+        const sortedArr = arr.sort((a, b) => {
+          return (
+            customOrder.indexOf(a.component) - customOrder.indexOf(b.component)
+          );
+        });
+
+        setFullSelectedValue(sortedArr);
+      }
+
+      React.useEffect(() => {
+        GetAllClusterStatusData(clustersAndComponent[0]);
+      }, [clusterOpen, clustersAndComponent]);
+      const ClusterBoxRef = React.useRef(null);
+
+      return (
+        <div
+          className="mb-[59px]"
+          onClick={() => toggleCluster(clustersAndComponent[0])}
+          ref={ClusterBoxRef}
+        >
+          <div className=" p-[16px] flex justify-between items-center  text-white border-l-[2px] border-[#00ADE4]  h-[57px] bg-[#202020] mb-[24px]">
+            <div className="font-semibold text-[20px] leading-[24.8px] ">
+              {clustersAndComponent[0]}
+            </div>
+            <p>
+              {!clusterOpen[clustersAndComponent[0]] ? (
+                <i className="fa-solid fa-chevron-down w-[9.6px] m-[0] text-white"></i>
+              ) : (
+                <i className="fa-solid fa-chevron-up w-[9.6px] m-[0] text-white"></i>
+              )}
+            </p>
+          </div>
+          <Status values={selectedValue} />
+          {!clusterOpen[clustersAndComponent[0]] ? (
+            <div></div>
+          ) : (
+            <div className="border-l-[2px] border-[#00ADE4] flex flex-col gap-[56px] pl-[48px] mt-[40px]">
+              {fullSelectedValue.map((value, index) => (
+                <div key={index} className=" flex flex-col gap-[24px]">
+                  <div className="text-white  font-medium leading-[19.8px] text-[16px]">
+                    {value.values[0].component}
+                  </div>
+                  <Status values={value.values} />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      );
+    };
+
+    function getBackgroundColor(percentage) {
+      // Define the color stops
+      const colors = {
+        0: [231, 231, 231], // Red at 0%
+        60: [141, 192, 62], // Intermediate color at 60%
+        80: [200, 220, 100], // Color at 80%
+        90: [87, 195, 80],
+        100: [33, 198, 98], // Final color at 100%
+      };
+
+      // Ensure percentage is within bounds
+      if (percentage <= 0) return `rgb(${colors[0].join(',')})`;
+      if (percentage >= 100) return `rgb(${colors[100].join(',')})`;
+      if (percentage >= 90 && percentage < 100)
+        return `rgb(${colors[90].join(',')})`;
+
+      // Find the appropriate color interval
+      let lowerBound = 0;
+      let upperBound = 100;
+      for (let bound in colors) {
+        const value = parseInt(bound, 10);
+        if (value <= percentage) lowerBound = value;
+        if (value > percentage) {
+          upperBound = value;
+          break;
+        }
+      }
+
+      // Interpolate between the two colors
+      const lowerColor = colors[lowerBound];
+      const upperColor = colors[upperBound];
+      const factor = (percentage - lowerBound) / (upperBound - lowerBound);
+
+      const resultColor = lowerColor.map((lowerVal, index) =>
+        Math.round(lowerVal + factor * (upperColor[index] - lowerVal))
+      );
+
+      return `rgb(${resultColor.join(',')})`;
+    }
+    function Status({ values }) {
+      values.sort((a, b) => new Date(a.date) - new Date(b.date));
+      if (values.length > 12) {
+        values = values.slice(-12); // Keep only the last 12 items
+      }
+
+      console.log({ values });
+      return (
+        <div>
+          <div className=" inline-grid grid-cols-3 xs:grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-12 justify-start md:gap-y-[20px] gap-x-5 gap-y-8">
+            {values.map((item, index) => (
+              <div
+                className="flex flex-col gap-[15px] w-[86px] h-[147px] min-w-[86px] min-h-[147px] justify-start "
+                key={index}
+              >
+                <div className="text-white text-[14px] m-[0] font-medium leading-[17.36px]">
+                  <p className="block ">{item.date.split(' ')[0]}</p>
+                  <p className="block ">{item.date.split(' ')[1]}</p>
+                </div>
+
+                <div
+                  className=" w-[56px] h-[56px] min-w-[56px] min-h-[56px]"
+                  style={{
+                    backgroundColor: getBackgroundColor(item.uptime),
+                  }}
+                ></div>
+
+                <div className="text-[#DDDDDD] text-[14px] leading-[17.36px] font-medium">
+                  {item.uptime == '' ||
+                  isNaN(item.uptime) ||
+                  item.uptime.includes('NaN')
+                    ? 'N/A'
+                    : `${parseFloat(item.uptime)} %`}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    root.render(<App />);
+  </script>
+</html>

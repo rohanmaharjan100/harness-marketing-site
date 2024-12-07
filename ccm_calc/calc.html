@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Web Page</title>
+
+    <!-- Link to an external CSS file -->
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+
+  <body>
+    <div class="heading">
+      <h1>Savings Calculator</h1>
+      <h3>Calculate how much you can potentially save on your cloud costs</h3>
+      <div class="container calculator-container" id="container">
+        <div class="left">
+          <div id="cloudProvider">
+            <p>Select Cloud Provider :</p>
+            <div class="cloudProvider-block">
+              <label>
+                <input type="radio" name="cloudProvider" value="aws" checked />
+                <div class="cloudProvider-block-img">
+                  <img
+                    src="https://uploads-ssl.webflow.com/6222ca42ea87e1bd1aa1d10c/6537e73e152774b96bbb5ba1_aws-svgrepo-com.svg"
+                    alt="Option 1"
+                  />
+                </div>
+              </label>
+
+              <label>
+                <input type="radio" name="cloudProvider" value="azure" />
+                <div class="cloudProvider-block-img">
+                  <img
+                    src="https://uploads-ssl.webflow.com/6222ca42ea87e1bd1aa1d10c/6537e73efba7b3c24a140323_azure-svgrepo-com.svg"
+                    alt="Option 2"
+                  />
+                </div>
+              </label>
+              <label>
+                <input type="radio" name="cloudProvider" value="gcp" />
+                <div class="cloudProvider-block-img">
+                  <img
+                    src="https://uploads-ssl.webflow.com/6222ca42ea87e1bd1aa1d10c/6537e73ea5c7e1eefb65b5e2_google-cloud-svgrepo-com.svg"
+                    alt="Option 3"
+                  />
+                </div>
+              </label>
+            </div>
+          </div>
+          <div id="aws-container" value="aws">
+            <div class="price-row">
+              <p>Enter monthly EC2 spend</p>
+              <div class="currency-wrap">
+                <span class="currency-code">$</span>
+                <input type="number" name="EC2" value="500000" min="0" />
+              </div>
+            </div>
+            <div class="price-row">
+              <div class="short-lived">
+                <p>What % of that is spend on short-lived resources?</p>
+                <div class="tooltip">
+                  <div class="tooltip-box">
+                    Short-lived resources are used intermittently and can be
+                    shut down when they are idle. On the other hand, long
+                    running resources need to be up and running throughout, and
+                    cannot be shut down.
+                  </div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M8.01953 13C10.781 13 13.0195 10.7614 13.0195 8C13.0195 5.23858 10.781 3 8.01953 3C5.25811 3 3.01953 5.23858 3.01953 8C3.01953 10.7614 5.25811 13 8.01953 13ZM8.01953 14C11.3332 14 14.0195 11.3137 14.0195 8C14.0195 4.68629 11.3332 2 8.01953 2C4.70582 2 2.01953 4.68629 2.01953 8C2.01953 11.3137 4.70582 14 8.01953 14ZM7.99951 7.5C8.27565 7.5 8.49951 7.72386 8.49951 8V10.5C8.49951 10.7761 8.27565 11 7.99951 11C7.72337 11 7.49951 10.7761 7.49951 10.5V8C7.49951 7.72386 7.72337 7.5 7.99951 7.5ZM7.99951 6.47095C8.41373 6.47095 8.74951 6.13516 8.74951 5.72095C8.74951 5.30673 8.41373 4.97095 7.99951 4.97095C7.5853 4.97095 7.24951 5.30673 7.24951 5.72095C7.24951 6.13516 7.5853 6.47095 7.99951 6.47095Z"
+                      fill="#B0B1C3"
+                    ></path>
+                  </svg>
+                </div>
+              </div>
+              <input
+                type="range"
+                min="1"
+                max="100"
+                value="50"
+                class="slider"
+                name="AWS_SLR_EC2"
+              />
+              <p class="result"></p>
+            </div>
+            <div class="price-row">
+              <p>Enter monthly ASG spend</p>
+              <div class="currency-wrap">
+                <span class="currency-code">$</span
+                ><input type="number" name="ASG" value="100000" min="0" />
+              </div>
+            </div>
+            <div class="price-row">
+              <div class="short-lived">
+                <p>What % of that is spend on short-lived resources?</p>
+                <div class="tooltip">
+                  <div class="tooltip-box">
+                    Short-lived resources are used intermittently and can be
+                    shut down when they are idle. On the other hand, long
+                    running resources need to be up and running throughout, and
+                    cannot be shut down.
+                  </div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M8.01953 13C10.781 13 13.0195 10.7614 13.0195 8C13.0195 5.23858 10.781 3 8.01953 3C5.25811 3 3.01953 5.23858 3.01953 8C3.01953 10.7614 5.25811 13 8.01953 13ZM8.01953 14C11.3332 14 14.0195 11.3137 14.0195 8C14.0195 4.68629 11.3332 2 8.01953 2C4.70582 2 2.01953 4.68629 2.01953 8C2.01953 11.3137 4.70582 14 8.01953 14ZM7.99951 7.5C8.27565 7.5 8.49951 7.72386 8.49951 8V10.5C8.49951 10.7761 8.27565 11 7.99951 11C7.72337 11 7.49951 10.7761 7.49951 10.5V8C7.49951 7.72386 7.72337 7.5 7.99951 7.5ZM7.99951 6.47095C8.41373 6.47095 8.74951 6.13516 8.74951 5.72095C8.74951 5.30673 8.41373 4.97095 7.99951 4.97095C7.5853 4.97095 7.24951 5.30673 7.24951 5.72095C7.24951 6.13516 7.5853 6.47095 7.99951 6.47095Z"
+                      fill="#B0B1C3"
+                    ></path>
+                  </svg>
+                </div>
+              </div>
+              <input
+                type="range"
+                min="1"
+                max="100"
+                value="50"
+                class="slider"
+                name="AWS_SLR_ASG"
+              />
+              <p class="result">30%</p>
+            </div>
+            <div class="price-row">
+              <p>Enter monthly EKS spend</p>
+              <div class="currency-wrap">
+                <span class="currency-code">$</span
+                ><input type="number" name="EKS" value="500000" min="0" />
+              </div>
+            </div>
+            <div class="price-row">
+              <div class="short-lived">
+                <p>What % of that is spend on short-lived resources?</p>
+                <div class="tooltip">
+                  <div class="tooltip-box">
+                    Short-lived resources are used intermittently and can be
+                    shut down when they are idle. On the other hand, long
+                    running resources need to be up and running throughout, and
+                    cannot be shut down.
+                  </div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M8.01953 13C10.781 13 13.0195 10.7614 13.0195 8C13.0195 5.23858 10.781 3 8.01953 3C5.25811 3 3.01953 5.23858 3.01953 8C3.01953 10.7614 5.25811 13 8.01953 13ZM8.01953 14C11.3332 14 14.0195 11.3137 14.0195 8C14.0195 4.68629 11.3332 2 8.01953 2C4.70582 2 2.01953 4.68629 2.01953 8C2.01953 11.3137 4.70582 14 8.01953 14ZM7.99951 7.5C8.27565 7.5 8.49951 7.72386 8.49951 8V10.5C8.49951 10.7761 8.27565 11 7.99951 11C7.72337 11 7.49951 10.7761 7.49951 10.5V8C7.49951 7.72386 7.72337 7.5 7.99951 7.5ZM7.99951 6.47095C8.41373 6.47095 8.74951 6.13516 8.74951 5.72095C8.74951 5.30673 8.41373 4.97095 7.99951 4.97095C7.5853 4.97095 7.24951 5.30673 7.24951 5.72095C7.24951 6.13516 7.5853 6.47095 7.99951 6.47095Z"
+                      fill="#B0B1C3"
+                    ></path>
+                  </svg>
+                </div>
+              </div>
+              <input
+                type="range"
+                min="1"
+                max="100"
+                value="50"
+                class="slider"
+                name="AWS_SLR_EKS"
+              />
+              <p class="result">30%</p>
+            </div>
+            <div class="price-row">
+              <p>Enter monthly RDS spend</p>
+              <div class="currency-wrap">
+                <span class="currency-code">$</span>
+                <input type="number" name="RDS" value="200000" min="0" />
+              </div>
+            </div>
+            <div class="price-row">
+              <div class="short-lived">
+                <p>What % of that is spend on short-lived resources?</p>
+                <div class="tooltip">
+                  <div class="tooltip-box">
+                    Short-lived resources are used intermittently and can be
+                    shut down when they are idle. On the other hand, long
+                    running resources need to be up and running throughout, and
+                    cannot be shut down.
+                  </div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M8.01953 13C10.781 13 13.0195 10.7614 13.0195 8C13.0195 5.23858 10.781 3 8.01953 3C5.25811 3 3.01953 5.23858 3.01953 8C3.01953 10.7614 5.25811 13 8.01953 13ZM8.01953 14C11.3332 14 14.0195 11.3137 14.0195 8C14.0195 4.68629 11.3332 2 8.01953 2C4.70582 2 2.01953 4.68629 2.01953 8C2.01953 11.3137 4.70582 14 8.01953 14ZM7.99951 7.5C8.27565 7.5 8.49951 7.72386 8.49951 8V10.5C8.49951 10.7761 8.27565 11 7.99951 11C7.72337 11 7.49951 10.7761 7.49951 10.5V8C7.49951 7.72386 7.72337 7.5 7.99951 7.5ZM7.99951 6.47095C8.41373 6.47095 8.74951 6.13516 8.74951 5.72095C8.74951 5.30673 8.41373 4.97095 7.99951 4.97095C7.5853 4.97095 7.24951 5.30673 7.24951 5.72095C7.24951 6.13516 7.5853 6.47095 7.99951 6.47095Z"
+                      fill="#B0B1C3"
+                    ></path>
+                  </svg>
+                </div>
+              </div>
+              <input
+                type="range"
+                min="1"
+                max="100"
+                value="50"
+                class="slider"
+                name="AWS_SLR_RDS"
+              />
+              <p class="result">30%</p>
+            </div>
+            <div class="price-row">
+              <p>Enter monthly ECS spend</p>
+              <div class="currency-wrap">
+                <span class="currency-code">$</span
+                ><input type="number" name="ECS" value="200000" min="0" />
+              </div>
+            </div>
+            <div class="price-row">
+              <div class="short-lived">
+                <p>What % of that is spend on short-lived resources?</p>
+                <div class="tooltip">
+                  <div class="tooltip-box">
+                    Short-lived resources are used intermittently and can be
+                    shut down when they are idle. On the other hand, long
+                    running resources need to be up and running throughout, and
+                    cannot be shut down.
+                  </div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M8.01953 13C10.781 13 13.0195 10.7614 13.0195 8C13.0195 5.23858 10.781 3 8.01953 3C5.25811 3 3.01953 5.23858 3.01953 8C3.01953 10.7614 5.25811 13 8.01953 13ZM8.01953 14C11.3332 14 14.0195 11.3137 14.0195 8C14.0195 4.68629 11.3332 2 8.01953 2C4.70582 2 2.01953 4.68629 2.01953 8C2.01953 11.3137 4.70582 14 8.01953 14ZM7.99951 7.5C8.27565 7.5 8.49951 7.72386 8.49951 8V10.5C8.49951 10.7761 8.27565 11 7.99951 11C7.72337 11 7.49951 10.7761 7.49951 10.5V8C7.49951 7.72386 7.72337 7.5 7.99951 7.5ZM7.99951 6.47095C8.41373 6.47095 8.74951 6.13516 8.74951 5.72095C8.74951 5.30673 8.41373 4.97095 7.99951 4.97095C7.5853 4.97095 7.24951 5.30673 7.24951 5.72095C7.24951 6.13516 7.5853 6.47095 7.99951 6.47095Z"
+                      fill="#B0B1C3"
+                    ></path>
+                  </svg>
+                </div>
+              </div>
+              <input
+                type="range"
+                min="1"
+                max="100"
+                value="50"
+                class="slider"
+                name="AWS_SLR_ECS"
+              />
+              <p class="result"></p>
+            </div>
+
+            <hr />
+            <div class="price-row">
+              <p>
+                What % of all that spend is covered by reserved instances or
+                savings plans?
+              </p>
+              <input
+                type="range"
+                min="1"
+                max="100"
+                value="60"
+                class="slider"
+                name="RIs_SavingPlans"
+              />
+              <p class="result">60%</p>
+            </div>
+            <div class="price-row">
+              <p>What % of that total is production spend?</p>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value="60"
+                class="slider"
+                name="production_Spend"
+              />
+              <p class="result">60%</p>
+            </div>
+            <div class="price-row ">
+              <p>
+                What percent is total coverage including Commitment
+                Orchestrator? (max 70%)
+              </p>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value="70"
+                class="slider"
+                name="Total_Coverage_including_Commitment_Orchestrator"
+              />
+              <p class="result">70%</p>
+            </div>
+            <div class="price-row display-none">
+              <p>What percent is AutoStopping savings?</p>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value="70"
+                class="slider"
+                name="AutoStopping_Saving_Percent"
+              />
+              <p class="result">70%</p>
+            </div>
+            <div class="price-row display-none">
+              <p>What percent is Cluster Orchestrator Spot savings?</p>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value="70"
+                class="slider"
+                name="Cluster_Orchestrator_Spot_Savings_Percent"
+              />
+              <p class="result">70%</p>
+            </div>
+          </div>
+          <div id="gcp-container" value="gcp">
+            <div class="price-row">
+              <p>Monthly Compute Engine VM Spend?</p>
+              <div class="currency-wrap">
+                <span class="currency-code">$</span>
+                <input type="number" name="VM_Spend" value="500000" min="0" />
+              </div>
+            </div>
+            <div class="price-row">
+              <div class="short-lived">
+                <p>What % of that is spend on short-lived resources?</p>
+                <div class="tooltip">
+                  <div class="tooltip-box">
+                    Short-lived resources are used intermittently and can be
+                    shut down when they are idle. On the other hand, long
+                    running resources need to be up and running throughout, and
+                    cannot be shut down.
+                  </div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M8.01953 13C10.781 13 13.0195 10.7614 13.0195 8C13.0195 5.23858 10.781 3 8.01953 3C5.25811 3 3.01953 5.23858 3.01953 8C3.01953 10.7614 5.25811 13 8.01953 13ZM8.01953 14C11.3332 14 14.0195 11.3137 14.0195 8C14.0195 4.68629 11.3332 2 8.01953 2C4.70582 2 2.01953 4.68629 2.01953 8C2.01953 11.3137 4.70582 14 8.01953 14ZM7.99951 7.5C8.27565 7.5 8.49951 7.72386 8.49951 8V10.5C8.49951 10.7761 8.27565 11 7.99951 11C7.72337 11 7.49951 10.7761 7.49951 10.5V8C7.49951 7.72386 7.72337 7.5 7.99951 7.5ZM7.99951 6.47095C8.41373 6.47095 8.74951 6.13516 8.74951 5.72095C8.74951 5.30673 8.41373 4.97095 7.99951 4.97095C7.5853 4.97095 7.24951 5.30673 7.24951 5.72095C7.24951 6.13516 7.5853 6.47095 7.99951 6.47095Z"
+                      fill="#B0B1C3"
+                    ></path>
+                  </svg>
+                </div>
+              </div>
+              <input
+                type="range"
+                min="1"
+                max="100"
+                value="50"
+                class="slider"
+                name="GCP_SLR_VM"
+              />
+              <p class="result">30%</p>
+            </div>
+            <div class="price-row">
+              <p>Monthly GKE Spend?</p>
+              <div class="currency-wrap">
+                <span class="currency-code">$</span>
+                <input type="number" name="GKE" value="500000" min="0" />
+              </div>
+            </div>
+            <div class="price-row">
+              <div class="short-lived">
+                <p>What % of that is spend on short-lived resources?</p>
+                <div class="tooltip">
+                  <div class="tooltip-box">
+                    Short-lived resources are used intermittently and can be
+                    shut down when they are idle. On the other hand, long
+                    running resources need to be up and running throughout, and
+                    cannot be shut down.
+                  </div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M8.01953 13C10.781 13 13.0195 10.7614 13.0195 8C13.0195 5.23858 10.781 3 8.01953 3C5.25811 3 3.01953 5.23858 3.01953 8C3.01953 10.7614 5.25811 13 8.01953 13ZM8.01953 14C11.3332 14 14.0195 11.3137 14.0195 8C14.0195 4.68629 11.3332 2 8.01953 2C4.70582 2 2.01953 4.68629 2.01953 8C2.01953 11.3137 4.70582 14 8.01953 14ZM7.99951 7.5C8.27565 7.5 8.49951 7.72386 8.49951 8V10.5C8.49951 10.7761 8.27565 11 7.99951 11C7.72337 11 7.49951 10.7761 7.49951 10.5V8C7.49951 7.72386 7.72337 7.5 7.99951 7.5ZM7.99951 6.47095C8.41373 6.47095 8.74951 6.13516 8.74951 5.72095C8.74951 5.30673 8.41373 4.97095 7.99951 4.97095C7.5853 4.97095 7.24951 5.30673 7.24951 5.72095C7.24951 6.13516 7.5853 6.47095 7.99951 6.47095Z"
+                      fill="#B0B1C3"
+                    ></path>
+                  </svg>
+                </div>
+              </div>
+              <input
+                type="range"
+                min="1"
+                max="100"
+                value="50"
+                class="slider"
+                name="GCP_SLR_GKE"
+              />
+              <p class="result">30%</p>
+            </div>
+
+            <hr />
+            <div class="price-row">
+              <p>
+                What % of all that spend is covered by committed use discounts?
+              </p>
+              <input
+                type="range"
+                min="1"
+                max="100"
+                value="60"
+                class="slider"
+                name="RIs_SavingPlans"
+              />
+              <p class="result">30%</p>
+            </div>
+            <div class="price-row">
+              <p>What % of all that spend is production spend?</p>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value="60"
+                class="slider"
+                name="production_Spend"
+              />
+              <p class="result">60%</p>
+            </div>
+
+            <div class="price-row display-none">
+              <p>Additional Coverage from Commitment Orchestrator</p>
+              <input
+                type="range"
+                min="1"
+                max="100"
+                value="10"
+                class="slider"
+                name="Additional_Commitment_Orchestrator_Coverage"
+              />
+              <p class="result">10%</p>
+            </div>
+            <div class="price-row display-none">
+              <p>Savings percent from Commitment Orchestrator</p>
+              <input
+                type="range"
+                min="1"
+                max="100"
+                value="30"
+                class="slider"
+                name="Savings_Commitment_Orchestrator_Percent"
+              />
+              <p class="result">30%</p>
+            </div>
+          </div>
+          <div id="azure-container" value="azure">
+            <div class="price-row">
+              <p>Monthly Azure VM Spend?</p>
+              <div class="currency-wrap">
+                <span class="currency-code">$</span>
+                <input
+                  type="number"
+                  placeholder="$ 52000"
+                  name="VM_Spend"
+                  value="500000"
+                  min="0"
+                />
+              </div>
+            </div>
+            <div class="price-row">
+              <div class="short-lived">
+                <p>What % of that is spend on short-lived resources?</p>
+                <div class="tooltip">
+                  <div class="tooltip-box">
+                    Short-lived resources are used intermittently and can be
+                    shut down when they are idle. On the other hand, long
+                    running resources need to be up and running throughout, and
+                    cannot be shut down.
+                  </div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M8.01953 13C10.781 13 13.0195 10.7614 13.0195 8C13.0195 5.23858 10.781 3 8.01953 3C5.25811 3 3.01953 5.23858 3.01953 8C3.01953 10.7614 5.25811 13 8.01953 13ZM8.01953 14C11.3332 14 14.0195 11.3137 14.0195 8C14.0195 4.68629 11.3332 2 8.01953 2C4.70582 2 2.01953 4.68629 2.01953 8C2.01953 11.3137 4.70582 14 8.01953 14ZM7.99951 7.5C8.27565 7.5 8.49951 7.72386 8.49951 8V10.5C8.49951 10.7761 8.27565 11 7.99951 11C7.72337 11 7.49951 10.7761 7.49951 10.5V8C7.49951 7.72386 7.72337 7.5 7.99951 7.5ZM7.99951 6.47095C8.41373 6.47095 8.74951 6.13516 8.74951 5.72095C8.74951 5.30673 8.41373 4.97095 7.99951 4.97095C7.5853 4.97095 7.24951 5.30673 7.24951 5.72095C7.24951 6.13516 7.5853 6.47095 7.99951 6.47095Z"
+                      fill="#B0B1C3"
+                    ></path>
+                  </svg>
+                </div>
+              </div>
+              <input
+                type="range"
+                min="1"
+                max="100"
+                value="50"
+                class="slider"
+                name="AZURE_SLR_VM"
+              />
+              <p class="result"></p>
+            </div>
+            <div class="price-row">
+              <p>Monthly AKS Spend?</p>
+              <div class="currency-wrap">
+                <span class="currency-code">$</span>
+                <input
+                  type="number"
+                  placeholder="$ 334000"
+                  name="AKS_Spend"
+                  value="500000"
+                  min="0"
+                />
+              </div>
+            </div>
+            <div class="price-row">
+              <div class="short-lived">
+                <p>What % of that is spend on short-lived resources?</p>
+                <div class="tooltip">
+                  <div class="tooltip-box">
+                    Short-lived resources are used intermittently and can be
+                    shut down when they are idle. On the other hand, long
+                    running resources need to be up and running throughout, and
+                    cannot be shut down.
+                  </div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M8.01953 13C10.781 13 13.0195 10.7614 13.0195 8C13.0195 5.23858 10.781 3 8.01953 3C5.25811 3 3.01953 5.23858 3.01953 8C3.01953 10.7614 5.25811 13 8.01953 13ZM8.01953 14C11.3332 14 14.0195 11.3137 14.0195 8C14.0195 4.68629 11.3332 2 8.01953 2C4.70582 2 2.01953 4.68629 2.01953 8C2.01953 11.3137 4.70582 14 8.01953 14ZM7.99951 7.5C8.27565 7.5 8.49951 7.72386 8.49951 8V10.5C8.49951 10.7761 8.27565 11 7.99951 11C7.72337 11 7.49951 10.7761 7.49951 10.5V8C7.49951 7.72386 7.72337 7.5 7.99951 7.5ZM7.99951 6.47095C8.41373 6.47095 8.74951 6.13516 8.74951 5.72095C8.74951 5.30673 8.41373 4.97095 7.99951 4.97095C7.5853 4.97095 7.24951 5.30673 7.24951 5.72095C7.24951 6.13516 7.5853 6.47095 7.99951 6.47095Z"
+                      fill="#B0B1C3"
+                    ></path>
+                  </svg>
+                </div>
+              </div>
+              <input
+                type="range"
+                min="1"
+                max="100"
+                value="50"
+                class="slider"
+                name="AZURE_SLR_AKS"
+              />
+              <p class="result">30%</p>
+            </div>
+
+            <hr />
+            <div class="price-row">
+              <p>
+                What % of all that spend is covered by reserved instances or
+                savings plans?
+              </p>
+              <input
+                type="range"
+                min="1"
+                max="100"
+                value="60"
+                class="slider"
+                name="RIs_SavingPlans"
+              />
+              <p class="result">30%</p>
+            </div>
+            <div class="price-row">
+              <p>What % of all that spend is production spend?</p>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value="60"
+                class="slider"
+                name="production_Spend"
+              />
+              <p class="result">60%</p>
+            </div>
+            <div class="price-row display-none">
+              <p>Additional Coverage from Commitment Orchestrator</p>
+              <input
+                type="range"
+                min="1"
+                max="100"
+                value="10"
+                class="slider"
+                name="Additional_Commitment_Orchestrator_Coverage"
+              />
+              <p class="result">10%</p>
+            </div>
+            <div class="price-row display-none">
+              <p>Savings percent from Commitment Orchestrator</p>
+              <input
+                type="range"
+                min="1"
+                max="100"
+                value="30"
+                class="slider"
+                name="Savings_Commitment_Orchestrator_Percent"
+              />
+              <p class="result">30%</p>
+            </div>
+          </div>
+        </div>
+        <div class="right">
+          <div>
+            <div>
+              <div class="doughnut-chart">
+                <canvas id="doughnut-chart"> </canvas>
+                <div class="doughnut-chart-detail" id="inside-circle">
+                  <h3 class="module_h-body">Potential Monthly Saving</h3>
+                  <h1 id="saving">$ 39,000</h1>
+                </div>
+              </div>
+              <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+              <div>
+                <div class="labels">
+                  <div class="label-heading">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                    >
+                      <circle cx="6" cy="6" r="6" fill="#01C9CC" />
+                    </svg>
+                    <p class="text-paragraph">AutoStopping</p>
+                  </div>
+                  <div class="label-value">
+                    <p class="text-paragraph" id="autoStopping">$0</p>
+                  </div>
+                </div>
+                <div id="commitment-orchestrator" class="labels">
+                  <div class="label-heading">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                    >
+                      <circle cx="6" cy="6" r="6" fill="#AADC72" />
+                    </svg>
+                    <p class="text-paragraph">Commitment Orchestrator</p>
+                  </div>
+                  <div class="label-value">
+                    <p class="text-paragraph" id="commitmentOrchestrator">
+                      $10,000
+                    </p>
+                  </div>
+                </div>
+                <div id="cluster-orchestrator" class="labels">
+                  <div class="label-heading">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                    >
+                      <circle cx="6" cy="6" r="6" fill="#0D98BA" />
+                    </svg>
+                    <p class="text-paragraph">Cluster Orchestrator</p>
+                  </div>
+                  <div class="label-value">
+                    <p class="text-paragraph" id="clusterOrchestrator">
+                      $10,000
+                    </p>
+                  </div>
+                </div>
+                <div class="notice">
+                  <p>
+                    The savings calculator assumes that you could gain 10%
+                    additional coverage through our automated purchasing and
+                    management of Reserved Instances (RIs) and savings plans
+                    using the Commitment Orchestrator feature, to a maximum of
+                    70%. It also accounts for 30% savings from the additional
+                    coverage using 1-year convertible RIs and compute savings
+                    plans. Please note that the actual additional coverage and
+                    savings will depend on your historical compute spend
+                    patterns. Additionally, the calculator estimates a 70%
+                    reduction in non-production compute spend, based on the
+                    average savings our customers have achieved with our Cloud
+                    AutoStopping feature. Further, the calculator assumes 70%
+                    average spot savings from the Cluster Orchestrator feature,
+                    covering 30% of your monthly non-production EKS spend.
+                    Savings from Cloud AutoStopping and Cluster Orchestrator are
+                    from the on-demand share of spend, not covered by RIs or
+                    Savings Plans.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="circle-buttons">
+              <a
+                href="https://app.harness.io/auth/#/signup?module=ccm&amp;utm_source=harness_io&amp;utm_medium=cta&amp;utm_campaign=ccm&amp;utm_content=hero"
+                target="_blank"
+                class="hero_cta--primary-white"
+                >Get Started</a
+              >
+              <a
+                href="/demo/next-gen-ccm?utm_source=harness_io&amp;utm_medium=cta&amp;utm_campaign=ccm&amp;utm_content=hero"
+                target="_blank"
+                class="module_cta--secondary"
+                >Book a Demo</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Link to an external JavaScript file -->
+    <script src="script.js"></script>
+    <script src="calc.js"></script>
+  </body>
+</html>

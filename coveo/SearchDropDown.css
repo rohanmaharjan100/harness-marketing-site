@@ -1,0 +1,182 @@
+:root {
+  --mod-opensource-300: #b0b1c4;
+  --mod-opensource-200: #d9dae5;
+  --mod-opensource-100: #f3f3fa;
+  --primary-main: #0278d5;
+  --gray-200: #d9dae5;
+  --gray-800: #22222a;
+  --mod-cd-300: #30841f;
+  --mod-cd-200: #5fb34e;
+  --mod-cd-100: #f6fff2;
+  --mod-cde-300: #1947ec;
+  --mod-cde-200: #2660ff;
+  --mod-cde-100: #ebefff;
+  --mod-cv-300: #30841f;
+  --mod-cv-200: #5fb34e;
+  --mod-cv-100: #f6fff2;
+  --mod-ci-300: #0672b6;
+  --mod-ci-200: #2bb1f2;
+  --mod-ci-100: #e2f5ff;
+  --mod-ccm-300: #24807f;
+  --mod-ccm-200: #01c9cc;
+  --mod-ccm-100: #ecffff;
+  --mod-ff-300: #c05809;
+  --mod-ff-200: #ee8625;
+  --mod-ff-100: #fcf4e3;
+  --mod-sto-300: #1947ec;
+  --mod-sto-200: #2660ff;
+  --mod-sto-100: #ebefff;
+  --mod-srm-300: #6938c0;
+  --mod-srm-200: #8b73ce;
+  --mod-srm-100: #f6f1ff;
+  --mod-ce-300: #cd0056;
+  --mod-ce-200: #ff006a;
+  --mod-ce-100: #fff1f7;
+  --mod-cet-300: #c01406;
+  --mod-cet-200: #ff5f45;
+  --mod-cet-100: #ffe2dd;
+  --mod-sei-300: #30841f;
+  --mod-sei-200: #5fb34e;
+  --mod-sei-100: #f6fff2;
+  --mod-ssca-300: #c01406;
+  --mod-ssca-200: #ff5f45;
+  --mod-ssca-100: #ffe2dd;
+  --mod-idp-300: #24807f;
+  --mod-idp-200: #01c9cc;
+  --mod-idp-100: #ecffff;
+  --mod-iacm-300: #30841f;
+  --mod-iacm-200: #5fb34e;
+  --mod-iacm-100: #f6fff2;
+  --mod-code-300: #0672b6;
+  --mod-code-200: #2bb1f2;
+  --mod-code-100: #e2f5ff;
+  --mod-opensource-300: #b0b1c4;
+  --mod-opensource-200: #d9dae5;
+  --mod-opensource-100: #f3f3fa;
+}
+body {
+  font-family: Geist !important;
+}
+.atomic-search-layout > atomic-layout-section {
+  width: 100%;
+}
+@media only screen and (min-width: 1024px) {
+  .atomic-search-layout > atomic-layout-section {
+    width: 100% !important;
+  }
+}
+#search-interface-box {
+  padding: 0 !important;
+}
+atomic-search-layout {
+  margin-top: -16px;
+}
+atomic-search-box {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+atomic-search-box::part(wrapper) {
+  height: 40px;
+  padding: 4px 16px;
+  border-radius: 40px;
+  background: #ffffff12;
+  border: 2px solid #00ade4;
+}
+atomic-search-box::part(submit-button) {
+  background: transparent;
+  height: 24px;
+  width: 24px;
+  color: white;
+}
+atomic-search-box::part(textarea),
+atomic-search-box::part(query-suggestion-text) {
+  color: white;
+}
+atomic-search-box::part(textarea) {
+  padding: 0;
+  margin: 0;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 2px;
+}
+atomic-search-box::part(
+    active-suggestion suggestion-with-query query-suggestion-item
+  ) {
+  background-color: #00ade4;
+}
+atomic-search-box::part(suggestion) {
+  border-bottom: 0.05px solid #ffffff12;
+}
+atomic-search-box::part(
+    active-suggestion suggestion-with-query query-suggestion-item
+  ):hover {
+  background-color: #00ade4;
+}
+atomic-search-box::part(suggestions-wrapper suggestions-single-list) {
+  margin-top: 4px;
+  background-color: #232323;
+}
+.search-box-products {
+  padding-left: 24px;
+}
+.search-box-products > p {
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16.44px;
+  letter-spacing: -0.02em;
+  text-align: left;
+}
+.tag {
+  height: 28px;
+  padding: 6px 12px 6px 12px;
+  gap: 4px;
+  border-radius: 20px;
+  border: 1px solid #ffffff2b;
+  color: white;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16.44px;
+  letter-spacing: -0.02em;
+  text-align: left;
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.tag:hover {
+  border-color: var(--primary-main);
+}
+.search-box-continuous-delivery::before {
+  content: url('https://cdn.jsdelivr.net/gh/rohanmaharjan100/cdn/icon_cd_s.svg');
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+}
+.search-box-continuous-delivery:hover {
+  border-color: var(--mod-cd-300);
+}
+.search-box-continuous-integration::before {
+  content: url('https://cdn.jsdelivr.net/gh/rohanmaharjan100/cdn/icon_ci_s.svg');
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+}
+.search-box-continuous-integration:hover {
+  border-color: var(--mod-ci-300);
+}
+.search-box-code-repository::before {
+  content: url('https://cdn.jsdelivr.net/gh/rohanmaharjan100/cdn/icon_code_s.svg');
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+}
+.search-box-code-repository:hover {
+  border-color: var(--mod-code-300);
+}
