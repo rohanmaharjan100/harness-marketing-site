@@ -1,0 +1,403 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script defer src="https://cdn.tailwindcss.com"></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.production.min.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
+    ></script>
+    <script
+      defer
+      src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
+    <style>
+      .mini-game {
+        position: relative;
+        width: 100%;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body class="mini-game"></body>
+
+  <script type="text/babel">
+    const questions = {
+      LEVEL_1: {
+        scenario: "A build just failed! What's your first move?",
+        options: [
+          {
+            text: 'Check the logs for context',
+            points: 1,
+            feedback: 'Smart move! The logs will give you valuable insights.',
+          },
+          {
+            text: 'Notify the team on Slack',
+            points: 0,
+            feedback:
+              "Not bad, but let's investigate first before alarming everyone.",
+          },
+          {
+            text: 'Restart the build without investigation',
+            points: -1,
+            feedback: 'Oops! Always investigate before taking action.',
+          },
+        ],
+      },
+      LEVEL_2: {
+        scenario:
+          'You find a bug in the production environment. What do you do?',
+        options: [
+          {
+            text: 'Log the issue and notify the team',
+            points: 1,
+            feedback: 'Good job! Communication is key in these situations.',
+          },
+          {
+            text: 'Try to fix it immediately without notifying anyone',
+            points: 0,
+            feedback: "It's better to inform the team before proceeding.",
+          },
+          {
+            text: 'Ignore it and hope it resolves itself',
+            points: -1,
+            feedback: 'Ignoring issues can lead to bigger problems later.',
+          },
+        ],
+      },
+      LEVEL_3: {
+        scenario:
+          'A teammate is struggling with their tasks. How do you assist?',
+        options: [
+          {
+            text: 'Offer to pair program and help them out',
+            points: 1,
+            feedback:
+              'Great! Collaboration can improve team morale and efficiency.',
+          },
+          {
+            text: 'Suggest they figure it out on their own',
+            points: 0,
+            feedback:
+              'Encouraging independence is good, but offering help is better.',
+          },
+          {
+            text: 'Complain to the manager about their performance',
+            points: -1,
+            feedback:
+              'Not a good approach. It’s better to offer support first.',
+          },
+        ],
+      },
+    };
+
+    const domContainer = document.getElementsByClassName('mini-game');
+    const root = ReactDOM.createRoot(domContainer[0]);
+
+    const LEVEL_1_OPTIONS = [
+      {
+        text: 'Check the logs for context',
+        points: 1,
+        feedback: 'Smart move! The logs will give you valuable insights.',
+      },
+      {
+        text: 'Notify the team on Slack',
+        points: 0,
+        feedback:
+          "Not bad, but let's investigate first before alarming everyone.",
+      },
+      {
+        text: 'Restart the build without investigation',
+        points: -1,
+        feedback: 'Oops! Always investigate before taking action.',
+      },
+    ];
+    function App() {
+      const [gameState, setGameState] = React.useState('welcome');
+      const [points, setPoints] = React.useState(0);
+      const [stress, setStress] = React.useState(0);
+      const [timeRemaining, setTimeRemaining] = React.useState(60);
+
+      React.useEffect(() => {
+        if (gameState === 'playing') {
+          const timer = setInterval(() => {
+            setTimeRemaining((prev) => {
+              if (prev <= 1) {
+                setGameState('ended');
+                return 0;
+              }
+              return prev - 1;
+            });
+            setStress((prev) => Math.min(prev + 1.5, 100));
+          }, 1000);
+
+          return () => clearInterval(timer);
+        }
+      }, [gameState]);
+
+      function setGameStateInGame(gameState) {
+        setGameState(gameState);
+      }
+      const handleChoice = (points) => {
+        setPoints((prev) => prev + points);
+        setStress((prev) => Math.max(0, prev - points * 10));
+        setTimeRemaining(60);
+        setGameState('paused');
+      };
+
+      function startGame() {
+        setGameState('playing');
+      }
+
+      const resetGame = () => {
+        setGameState('welcome');
+        setPoints(0);
+        setStress(0);
+        setTimeRemaining(60);
+      };
+
+      return (
+        <div className="w-full h-full flex flex-col items-center justify-start  ">
+          {gameState === 'welcome' && <WelcomeScreen startGame={startGame} />}
+          {(gameState === 'playing' || gameState === 'paused') && (
+            <div className="relative w-full">
+              <Header
+                stress={stress}
+                points={points}
+                timeRemaining={timeRemaining}
+              />
+
+              <Game
+                questions={questions}
+                onChoice={handleChoice}
+                setGameStateInGame={setGameStateInGame}
+              />
+            </div>
+          )}
+          {gameState === 'ended' && (
+            <EndScreen points={points} resetGame={resetGame} />
+          )}
+        </div>
+      );
+    }
+
+    const EndScreen = ({ points, resetGame }) => {
+      const getEndGameMessage = () => {
+        if (points >= 1) return 'Zen Master 🧘‍♂️';
+        if (points === 0) return 'On-Call Warrior ⚔️';
+        return 'Chaos Champion 🌪️';
+      };
+
+      return (
+        <div className="max-w-[448px] mt-24">
+          {' '}
+          <h2 className="text-3xl font-bold pb-8">{getEndGameMessage()}</h2>
+          <p className="text-xl pb-8">Final Score: {points} points</p>
+          <p className="text-lg text-gray-600 pb-8">
+            Your stress level could've been lower with Harness Incident
+            Response.
+          </p>
+          <div className="">
+            <button
+              onClick={() =>
+                window.open(
+                  'https://www.harness.io/products/incident-response',
+                  '_blank'
+                )
+              }
+              className="  w-full bg-[#8F4BEE] h-[44px] p-x-[32px] py-0 text-white text-[14px] font-medium rounded-md hover:bg-[#a26cef]"
+            >
+              Join Beta
+            </button>
+
+            <button
+              onClick={resetGame}
+              className=" w-full bg-white h-[44px] p-x-[32px] py-0 text-black text-[14px] font-medium rounded-md border border-slate-300 hover:bg-teal-500 "
+            >
+              Play Again
+            </button>
+          </div>
+        </div>
+      );
+    };
+
+    const Header = ({ stress, points, timeRemaining }) => {
+      const [stressColor, setStressColor] = React.useState('bg-green-500');
+
+      React.useEffect(() => {
+        if (stress > 75) {
+          setStressColor('bg-red-500');
+        } else if (stress > 50) {
+          setStressColor('bg-yellow-500');
+        } else {
+          setStressColor('bg-green-500');
+        }
+      }, [stress]);
+      return (
+        <div className="absolute top-4 left-4 right-4 flex items-center justify-between px-4 py-2 bg-white/80 backdrop-blur-sm rounded-lg shadow-lg">
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <i className="text-orange-500 fa-solid fa-triangle-exclamation"></i>
+              <div className="w-32 text-left">
+                <p className="text-xs text-gray-500 mb-1">Stress Level</p>
+                <div className="w-full bg-gray-300 rounded-full h-2.5">
+                  <div
+                    className={`${stressColor} h-2.5 rounded-full`}
+                    style={{ width: `${stress}%` }}
+                  ></div>
+                </div>
+              </div>
+            </div>
+
+            <div className="font-mono border rounded-md px-4 py-2">
+              {points} pts
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <i class="fa-regular fa-clock"></i>
+            <span className="font-mono">{timeRemaining}s</span>
+          </div>
+        </div>
+      );
+    };
+
+    const WelcomeScreen = ({ startGame }) => {
+      return (
+        <div className="max-w-[448px] mt-24">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-[#ff7f50] to-[#1e90ff] bg-clip-text text-center text-transparent mb-8">
+            Save the Day !
+          </h1>
+
+          <p className="text-lg text-gray-600 pb-8 text-center">
+            The system is down, and you're on-call. Are you ready to be the hero
+            we need?
+          </p>
+
+          <div className="">
+            <button
+              onClick={() => startGame()}
+              className="  w-full bg-[#8F4BEE] h-[44px] p-x-[32px] py-0 text-white text-[14px] font-medium rounded-md hover:bg-[#a26cef]"
+            >
+              Yes, let's fix it! 🚀
+            </button>
+
+            <button
+              onClick={() =>
+                (window.location.href =
+                  'https://www.harness.io/products/incident-response')
+              }
+              className=" w-full bg-white h-[44px] p-x-[32px] py-0 text-black text-[14px] font-medium rounded-md border border-slate-300 hover:bg-teal-500 "
+            >
+              Tell me more first 🤔
+            </button>
+          </div>
+        </div>
+      );
+    };
+
+    const ShowResponse = ({ feedback, points }) => {
+      const getColor = () => {
+        if (points === 1) return 'green';
+        if (points === -1) return 'red';
+        return 'gray'; // Neutral color for 0 or other values
+      };
+
+      return (
+        <div style={{ color: getColor() }} className="text-lg pb-8 text-left">
+          {feedback}
+        </div>
+      );
+    };
+
+    const Game = ({ questions, onChoice, setGameStateInGame }) => {
+      const [isChoosing, setIsChoosing] = React.useState(true);
+      const [selectedOption, setSelectedOption] = React.useState(null);
+      const [currentLevel, setCurrentLevel] = React.useState('LEVEL_1');
+      const [isLastQuestion, setIsLastQuestion] = React.useState(false);
+
+      const handleChoice = (option) => {
+        setSelectedOption(option);
+        setIsChoosing(false);
+        onChoice(option.points);
+        setGameStateInGame('paused');
+        const nextLevel = 'LEVEL_' + (Number(currentLevel.split('_')[1]) + 1);
+
+        if (!questions[nextLevel]) {
+          setIsLastQuestion(true);
+        }
+      };
+
+      const handleNextLevel = () => {
+        const nextLevel = 'LEVEL_' + (Number(currentLevel.split('_')[1]) + 1);
+
+        if (questions[nextLevel]) {
+          setGameStateInGame('playing');
+          setCurrentLevel(nextLevel);
+          setIsChoosing(true);
+          setSelectedOption(null);
+        } else {
+          setGameStateInGame('ended');
+        }
+      };
+
+      const { scenario, options } = questions[currentLevel];
+
+      return (
+        <div className="my-16 mt-28 max-w-[448px] m-auto ">
+          <div className="text-center mb-8">
+            <div className="mb-8 text-lg font-bold text-slate-600">
+              {currentLevel.replace('_', ' ')}
+            </div>
+            <h2 className="text-2xl font-bold mb-4">{scenario}</h2>
+          </div>
+
+          {isChoosing ? (
+            <div className="">
+              {options.map((option, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleChoice(option)}
+                  className="w-full bg-white h-[44px] px-[32px] py-0 text-black text-[14px] font-medium rounded-md border border-slate-200 hover:bg-slate-100"
+                >
+                  {option.text}
+                </button>
+              ))}
+            </div>
+          ) : (
+            selectedOption && (
+              <div className="w-full">
+                <ShowResponse
+                  points={selectedOption.points}
+                  feedback={selectedOption.feedback}
+                />
+                <div className="w-full text-right">
+                  <button
+                    onClick={handleNextLevel}
+                    className="mt-4  bg-blue-500 text-white py-2 px-4 rounded-md"
+                  >
+                    {!isLastQuestion ? 'Next Level' : 'Finish Game'}
+                  </button>
+                </div>
+              </div>
+            )
+          )}
+        </div>
+      );
+    };
+
+    root.render(<App />);
+  </script>
+</html>

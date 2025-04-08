@@ -1,0 +1,78 @@
+<script type="module">
+  (async () => {
+    await customElements.whenDefined('atomic-search-interface');
+    const searchInterfaceResult = document.getElementById(
+      'search-interface-result'
+    );
+
+    let tokenData = {};
+    const getCoveoToken = async () => {
+      try {
+        const response = await fetch(
+          'https://developer.harness.io/api/coveo_api'
+        );
+        const data = await response.json();
+        const item = {
+          token: data.token,
+          orgId: data.id,
+          expiry: Date.now() + 12 * 60 * 60 * 1000, // 12 hrs
+        };
+        localStorage.setItem('coveo_token', JSON.stringify(item));
+        return item;
+      } catch (error) {
+        console.error('Error fetching Coveo token:', error);
+        return {};
+      }
+    };
+
+    const storedToken = localStorage.getItem('coveo_token');
+    if (storedToken) {
+      const data = JSON.parse(storedToken);
+      if (data.expiry <= Date.now()) {
+        tokenData = await getCoveoToken();
+      } else {
+        tokenData = data;
+      }
+    } else {
+      tokenData = await getCoveoToken();
+    }
+
+    await searchInterfaceResult.initialize({
+      accessToken: tokenData.token,
+      organizationId: tokenData.orgId,
+    });
+
+    searchInterfaceResult.executeFirstSearch();
+    searchInterfaceResult.i18n.addResourceBundle('en', 'caption-filetype', {
+      '.html': 'html',
+    });
+  })();
+
+  const isTokenExpired = () => {
+    const storedToken = localStorage.getItem('coveo_token');
+    const data = JSON.parse(storedToken);
+    if (data && data.expiry) {
+      return data.expiry <= Date.now();
+    }
+    return true;
+  };
+
+  const interval = setInterval(async () => {
+    if (isTokenExpired()) {
+      const response = await fetch(
+        'https://developer.harness.io/api/coveo_api'
+      );
+      const data = await response.json();
+      const item = {
+        token: data.token,
+        orgId: data.id,
+        expiry: Date.now() + 12 * 60 * 60 * 1000, // 12 hrs
+      };
+      localStorage.setItem('coveo_token', JSON.stringify(item));
+      await searchInterfaceResult.initialize({
+        accessToken: data.token,
+        organizationId: data.orgId,
+      });
+    }
+  }, 30000); // check every 30 seconds
+</script>
