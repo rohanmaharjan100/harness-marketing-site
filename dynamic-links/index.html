@@ -1,0 +1,78 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+
+  <script>
+    const moduleMap = {
+      'AI Test Automation': 'ai-test-automation',
+      Armory: 'armory',
+      'Artifact Registry': 'artifact-registry',
+      'Chaos Engineering': 'chaos-engineering',
+      'Cloud Cost Management': 'cloud-cost-management',
+      'Cloud Development Environments': 'cloud-development-environments',
+      'Code Repository': 'code-repository',
+      'Continuous Delivery': 'continuous-delivery',
+      'Continuous Delivery & GitOps': 'continuous-delivery',
+      'Continuous Integration': 'continuous-integration',
+      'Database DevOps': 'database-devops',
+      'Feature Management & Experimentation': 'feature-management-experimentation',
+      'Incident Response': 'incident-response',
+      'Infrastructure as Code Management': 'infrastructure-as-code-management',
+      'Internal Developer Portal': 'internal-developer-portal',
+      'Security Testing Orchestration': 'security-testing-orchestration',
+      'Software Engineering Insights': 'software-engineering-insights',
+      'Supply Chain Security': 'supply-chain-security',
+    };
+
+    const module = document.querySelector('.ga-meta-module').textContent;
+    console.log(module);
+
+    const browserUrl = window.location.href;
+
+    if (browserUrl.includes('/products/')) {
+      const product = browserUrl.split('/products/')[1];
+      console.log(product);
+
+      const anchors = document.querySelectorAll('a[href*="/company/contact-sales"]');
+
+      const auths = document.querySelectorAll('a[href*="/app.harness.io/auth/"]');
+      console.log(auths);
+
+      for (const anchor of anchors) {
+        const url = new URL(anchor.href, window.location.origin);
+        // url.searchParams.set('utm_source', 'harness_io');
+        // url.searchParams.set('utm_medium', 'cta');
+        // url.searchParams.set('utm_content', 'main_nav');
+        url.searchParams.set('utm_campaign', product);
+
+        anchor.href = url.toString();
+      }
+      for (const auth of auths) {
+        const rawHref = auth.getAttribute('href');
+        const [basePart, fragment] = rawHref.split('#');
+        const url = new URL(fragment);
+        if (!fragment) {
+          const url = new URL(rawHref, window.location.origin);
+          url.searchParams.set('utm_campaign', product);
+          auth.setAttribute('href', url.toString());
+          continue;
+        }
+        // fragment like "/signup?utm_source=...&utm_medium=..."
+        const [path, queryString] = fragment.split('?');
+        const params = new URLSearchParams(queryString || '');
+
+        params.set('utm_campaign', product);
+
+        const newFragment = path + '?' + params.toString();
+
+        const finalHref = basePart + '#' + newFragment;
+
+        auth.setAttribute('href', finalHref);
+      }
+    }
+  </script>
+</html>
