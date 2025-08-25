@@ -205,3 +205,30 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }, 100);
   });
+
+document.addEventListener('DOMContentLoaded', () => {
+  const interval = setInterval(() => {
+    document.querySelectorAll('atomic-facet').forEach((e) => {
+      const o = e && e.shadowRoot;
+      o &&
+        o.querySelectorAll('span').forEach((e) => {
+          if (e.textContent == 'Cloud Cost Optimization') {
+            e.textContent = 'Cost & Optimization';
+          }
+          if (e.textContent == 'Developer Experience') {
+            e.textContent = 'Testing & Resilience';
+          }
+          if (e.textContent == 'Secure Software Delivery') {
+            e.textContent = 'Security & Compliance';
+          }
+          if (e.textContent == 'DevOps Modernization') {
+            e.textContent = 'DevOps & Automation';
+          }
+        });
+    });
+  }, 500);
+
+  setTimeout(() => {
+    clearInterval(interval);
+  }, 10000);
+});
