@@ -1,17 +1,3 @@
-<!DOCTYPE html>
-<html dir="ltr" lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
-    /><link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-    <title>Coveo Atomic</title>
-
-
-
 <script
       defer
       type="module"
@@ -65,67 +51,30 @@
           tokenData = await getCoveoToken();
         }
         
-     await searchInterfaceResult.initialize({
-          accessToken:"eyJhbGciOiJIUzI1NiJ9.eyJzZWFyY2hIdWIiOiJXZWJzaXRlU2VhcmNoIiwidjgiOnRydWUsInRva2VuSWQiOiJ4djYydGxzZWN6aTVsaGVkaTJzaXV2a2gzNCIsIm9yZ2FuaXphdGlvbiI6Imhhcm5lc3Nwcm9kdWN0aW9ucDl0aXZzcXkiLCJ1c2VySWRzIjpbeyJ0eXBlIjoiVXNlciIsIm5hbWUiOiJndWVzdCIsInByb3ZpZGVyIjoiRW1haWwgU2VjdXJpdHkgUHJvdmlkZXIifV0sInJvbGVzIjpbInF1ZXJ5RXhlY3V0b3IiXSwiaXNzIjoiU2VhcmNoQXBpIiwiZXhwIjoxNzY4OTIzNjIwLCJpYXQiOjE3Njg4ODA0MjB9._hOQGp55zu7O71eShjfLv0Ygnwav6rmzHxF3mfOkQLY",
-          organizationId: "harnessproductionp9tivsqy",
+      if (!window.location.hash) {
+              window.location.hash = '#f-commonsource=Harness.io%20Website,Harness.io%20Blog';
+        }
+        await searchInterfaceResult.initialize({
+      accessToken: tokenData.token,
+      organizationId: tokenData.orgId,
         });
-
-
-    const engine = searchInterfaceResult.engine;
-    const { loadFacetSetActions } = await import("https://static.cloud.coveo.com/headless/v2/headless.esm.js");
-    const facetActions = loadFacetSetActions(engine);
-
-  engine.dispatch(
-  facetActions.toggleSelectFacetValue({
-    facetId: 'source_facet',
-    selection: {
-      value: 'Harness.io Website',
-      state: 'selected',
-    },
-  })
-);
-
-// Select Harness.io Blog
-engine.dispatch(
-  facetActions.toggleSelectFacetValue({
-    facetId: 'source_facet',
-    selection: {
-      value: 'Harness.io Blog',
-      state: 'selected',
-    },
-  })
-);
-    searchInterfaceResult.executeFirstSearch();
-
-  
-
-
  
+        searchInterfaceResult.executeFirstSearch();
         searchInterfaceResult.i18n.addResourceBundle('en', 'caption-filetype', {
           '.html': 'html',
         });
       })();
       
     </script>
-
-<style>
-
-body{
-  font-family: "Inter", sans-serif;
-}
-
-</style>
-  </head>
-
-  <body>
-
-   <div class="search-result-page">
+    
+      <div class="search-result-page">
             <atomic-aria-live></atomic-aria-live>
       
-            <atomic-search-interface
-              id="search-interface-result"
-              fields-to-include='["categoryname", "commonmodule","commonvaluedriver"]'
-            >
+           <atomic-search-interface
+  id="search-interface-result"
+  reflect-state-in-url="true"
+  fields-to-include='["categoryname", "commonmodule","commonvaluedriver"]'
+>
               <atomic-search-layout class="atomic-search-layout-search">
                 <atomic-layout-section section="search">
                   <atomic-search-box>
@@ -140,7 +89,6 @@ body{
                   <atomic-html
                     value="<p  style='margin-bottom:32px;color:white;font-size: 16px; font-weight: 600; line-height: 21.92px; letter-spacing: -0.02em; text-align: left;margin-top:6px'>Filter properties by</p>"
                   ></atomic-html>
-                    <atomic-facet field="commonsource" label="Source" facet-id="source_facet" sortCriteria="alphanumericDescending" ></atomic-facet>
                   <atomic-facet-manager>     <atomic-facet
                     field="commonvaluedriver"
                     label="Business Value" 
@@ -181,6 +129,7 @@ body{
                
                     
                   
+                    <atomic-facet field="commonsource" label="Source" sortCriteria="alphanumericDescending" ></atomic-facet>
                     <atomic-facet
                       field="categoryname"
                       label="Category"
@@ -369,7 +318,3 @@ body{
               </atomic-search-layout>
             </atomic-search-interface>
     </div>
-  </body>
-
-
-</html>

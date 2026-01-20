@@ -1,0 +1,76 @@
+<link rel="stylesheet" href="https://cms.harness.io/js/coveo-min-files/SearchDropDown-min.css" />
+
+      <script
+      defer
+      type="module"
+      src="https://static.cloud.coveo.com/atomic/v3.3.0/atomic.esm.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://static.cloud.coveo.com/atomic/v3.3.0/themes/coveo.css"
+    />
+
+    <script type="module">
+      (async () => {
+        await customElements.whenDefined('atomic-search-interface');
+
+        const searchInterfaceBox = document.getElementById('search-interface-box');
+
+        let tokenData = {};
+        const getCoveoToken = async () => {
+          try {
+            const response = await fetch('https://developer.harness.io/api/coveo_api');
+            const data = await response.json();
+            const item = {
+              token: data.token,
+              orgId: data.id,
+              expiry: Date.now() + 12 * 60 * 60 * 1000, // 12hrs from now
+            };
+            localStorage.setItem('coveo_token_nav', JSON.stringify(item));
+            return item;
+          } catch (error) {
+            return {};
+          }
+        };
+        const storedToken = localStorage.getItem('coveo_token_nav');
+        if (storedToken) {
+          const data = JSON.parse(storedToken);
+          if (data.expiry <= Date.now()) {
+            tokenData = await getCoveoToken();
+          } else {
+            tokenData = data;
+          }
+        } else {
+          tokenData = await getCoveoToken();
+        }
+
+        await searchInterfaceBox.initialize({
+            accessToken: tokenData.token,
+      organizationId: tokenData.orgId,
+        });
+
+
+    const searchBox = document.querySelector('atomic-search-box');
+    searchBox.addEventListener('redirect', (event) => {
+      event.preventDefault(); 
+      const { redirectTo, value } = event.detail;
+      
+      const targetUrl = `${redirectTo}#q=${encodeURIComponent(value)}`;
+      window.location.href = targetUrl;
+    });
+      })();
+
+
+    </script>
+
+  
+
+  <atomic-search-interface id="search-interface-box" reflect-state-in-url="true">
+        <atomic-search-layout class="atomic-search-layout">
+          <atomic-layout-section section="search">
+            <atomic-search-box redirection-url="/dev-sandbox/search-results-dev">
+              <atomic-search-box-query-suggestions> </atomic-search-box-query-suggestions>
+            </atomic-search-box>
+          </atomic-layout-section>
+        </atomic-search-layout>
+      </atomic-search-interface>

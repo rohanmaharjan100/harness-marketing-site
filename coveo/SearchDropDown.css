@@ -151,7 +151,7 @@ atomic-search-box::part(suggestions-wrapper suggestions-single-list) {
   border-color: var(--primary-main);
 }
 .search-box-continuous-delivery::before {
-  content: url('https://cdn.jsdelivr.net/gh/rohanmaharjan100/cdn/icon_cd_s.svg');
+  content: url('https://developer.harness.io/img/icon_cd_s.svg');
   display: inline-block;
   width: 16px;
   height: 16px;
@@ -161,7 +161,7 @@ atomic-search-box::part(suggestions-wrapper suggestions-single-list) {
   border-color: var(--mod-cd-300);
 }
 .search-box-continuous-integration::before {
-  content: url('https://cdn.jsdelivr.net/gh/rohanmaharjan100/cdn/icon_ci_s.svg');
+  content: url('https://developer.harness.io/img/icon_ci_s.svg');
   display: inline-block;
   width: 16px;
   height: 16px;
@@ -171,7 +171,7 @@ atomic-search-box::part(suggestions-wrapper suggestions-single-list) {
   border-color: var(--mod-ci-300);
 }
 .search-box-code-repository::before {
-  content: url('https://cdn.jsdelivr.net/gh/rohanmaharjan100/cdn/icon_code_s.svg');
+  content: url('https://developer.harness.io/img/icon_code_s.svg');
   display: inline-block;
   width: 16px;
   height: 16px;

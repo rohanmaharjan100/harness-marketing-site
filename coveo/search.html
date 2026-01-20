@@ -1,0 +1,94 @@
+<!doctype html>
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Coveo Atomic</title>
+
+    <link rel="stylesheet" href="./SearchDropDown.css" />
+
+    <script
+      defer
+      type="module"
+      src="https://static.cloud.coveo.com/atomic/v3.25.0/atomic.esm.js"
+    ></script>
+    
+    <link rel="stylesheet" href="https://static.cloud.coveo.com/atomic/v3.25.0/themes/coveo.css" />
+
+    <script type="module">
+      (async () => {
+        await customElements.whenDefined('atomic-search-interface');
+
+        const searchInterfaceBox = document.getElementById('search-interface-box');
+
+        let tokenData = {};
+        const getCoveoToken = async () => {
+          try {
+            const response = await fetch('https://developer.harness.io/api/coveo_api');
+            const data = await response.json();
+            const item = {
+              token: data.token,
+              orgId: data.id,
+              expiry: Date.now() + 12 * 60 * 60 * 1000, // 12hrs from now
+            };
+            localStorage.setItem('coveo_token_nav', JSON.stringify(item));
+            return item;
+          } catch (error) {
+            return {};
+          }
+        };
+        const storedToken = localStorage.getItem('coveo_token_nav');
+        if (storedToken) {
+          const data = JSON.parse(storedToken);
+          if (data.expiry <= Date.now()) {
+            tokenData = await getCoveoToken();
+          } else {
+            tokenData = data;
+          }
+        } else {
+          tokenData = await getCoveoToken();
+        }
+
+        await searchInterfaceBox.initialize({
+          accessToken:
+            'eyJhbGciOiJIUzI1NiJ9.eyJzZWFyY2hIdWIiOiJXZWJzaXRlU2VhcmNoIiwidjgiOnRydWUsInRva2VuSWQiOiJ4djYydGxzZWN6aTVsaGVkaTJzaXV2a2gzNCIsIm9yZ2FuaXphdGlvbiI6Imhhcm5lc3Nwcm9kdWN0aW9ucDl0aXZzcXkiLCJ1c2VySWRzIjpbeyJ0eXBlIjoiVXNlciIsIm5hbWUiOiJndWVzdCIsInByb3ZpZGVyIjoiRW1haWwgU2VjdXJpdHkgUHJvdmlkZXIifV0sInJvbGVzIjpbInF1ZXJ5RXhlY3V0b3IiXSwiaXNzIjoiU2VhcmNoQXBpIiwiZXhwIjoxNzY4OTIzNjIwLCJpYXQiOjE3Njg4ODA0MjB9._hOQGp55zu7O71eShjfLv0Ygnwav6rmzHxF3mfOkQLY',
+          organizationId: 'harnessproductionp9tivsqy',
+        });
+
+        searchInterfaceBox.executeFirstSearch();
+        searchInterfaceBox.i18n.addResourceBundle('en', 'caption-filetype', {
+          '.html': 'html',
+        });
+      })();
+    </script>
+
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav style="background-color: yellow; margin-top: 400px">
+      <atomic-search-interface id="search-interface-box">
+        <atomic-search-layout class="atomic-search-layout">
+          <atomic-layout-section section="search">
+            <atomic-search-box redirection-url="/coveo/harness.html">
+              <atomic-search-box-query-suggestions> </atomic-search-box-query-suggestions>
+            </atomic-search-box>
+          </atomic-layout-section>
+        </atomic-search-layout>
+      </atomic-search-interface>
+    </nav>
+  </body>
+</html>
